@@ -6,7 +6,7 @@ A relaxing rhythm typing experience with synthesized piano, atmospheric themes, 
 
 ## Run locally
 
-Install Node.js 20 or later, then:
+Install Node.js 20.19+ or 22.12+, then:
 
 ```sh
 npm ci --legacy-peer-deps

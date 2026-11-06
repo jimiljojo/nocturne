@@ -73,12 +73,15 @@ function extractYouTubeId(url: string): string | null {
   return null;
 }
 
-function extractAppleMusicEmbed(url: string): string | null {
-  const match = url.match(/music\.apple\.com\/([\w-]+)\/(album|playlist|song)\/([\w-]+)\/([\d]+)/);
-  if (match) {
-    return url.replace("music.apple.com", "embed.music.apple.com");
+export function extractAppleMusicEmbed(url: string): string | null {
+  try {
+    const parsed = new URL(url);
+    if (parsed.protocol !== "https:" || parsed.hostname !== "music.apple.com" || parsed.username || parsed.password || parsed.port) return null;
+    if (!/^\/[\w-]+\/(album|playlist|song)\/[\w-]+\/\d+\/?$/.test(parsed.pathname)) return null;
+    return `https://embed.music.apple.com${parsed.pathname}${parsed.search}`;
+  } catch {
+    return null;
   }
-  return null;
 }
 
 function extractSpotifyEmbed(url: string): string | null {
